@@ -32,10 +32,10 @@ public class Game extends javax.swing.JFrame {
     
     private Timer gameTimer, wallsUpdateCoords, wallsUpdateLocation;
     
-    public Game() {
+    public Game(int duration) {
         initComponents();
         
-        GameDuration = 20_000; // 20 seconds
+        GameDuration = duration; // 20 seconds
         
         InitializeGameComponents();
         WallMovement();
@@ -369,7 +369,6 @@ public class Game extends javax.swing.JFrame {
                 }
             });
         }
-        
     }
     
     private void InitTimers() {
@@ -455,10 +454,6 @@ public class Game extends javax.swing.JFrame {
         this.callback = callback;
     }
     
-    public void SetGameSetting(int Duration) {
-        this.GameDuration = Duration;
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -486,12 +481,13 @@ public class Game extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the form 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Game().setVisible(true);
+                //new Game().setVisible(true);
             }
         });
+        */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

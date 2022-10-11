@@ -15,7 +15,7 @@ public class Results extends javax.swing.JFrame {
      * Creates new form Results
      */
     
-    public IResultCallback callback;
+    private IResultCallback callback;
     
     public Results() {
         initComponents();
