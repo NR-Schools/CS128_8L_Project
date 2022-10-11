@@ -98,7 +98,7 @@ public class Results extends javax.swing.JFrame {
         callback.ResultFinished();
     }//GEN-LAST:event_R2MMActionPerformed
 
-    public void SetScore(int score) {
+    public void SetData(int score, int duration) {
         ScoreTxt.setText(
                 Integer.toString(score)
         );

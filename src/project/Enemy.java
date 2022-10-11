@@ -9,7 +9,6 @@ package project;
  *
  * @author hp
  */
-public interface IGameCallback {
-    public void GameFinished(int Duration, int Points);
-    public void RestartGame(int newDuration);
+public class Enemy {
+    
 }

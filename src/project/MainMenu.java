@@ -15,8 +15,8 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
      * Creates new form MainMenu
      */
     
-    Game game = new Game();
-    Results results = new Results();
+    Game game;
+    Results results;
     
     public MainMenu() {
         initComponents();
@@ -74,6 +74,7 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
 
     private void PlayBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayBtnActionPerformed
         // TODO add your handling code here:
+        game = new Game();
         game.SetCallback(this);
         game.setVisible(true);
         this.setVisible(false);
@@ -120,19 +121,28 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void GameFinished() {
-        int score = game.PlayerPoints;
-        
+    public void GameFinished(int Duration, int Points) {
         game.dispose();
         
+        results = new Results();
         results.SetCallback(this);
         results.setVisible(true);
-        results.SetScore(score);
+        results.SetData(Points, Duration);
     }
 
     @Override
     public void ResultFinished() {
         results.dispose();
         this.setVisible(true);
+    }
+
+    @Override
+    public void RestartGame(int newDuration) {
+        game.dispose();
+        
+        game = new Game();
+        game.SetCallback(this);
+        game.SetGameSetting(newDuration);
+        game.setVisible(true);
     }
 }
