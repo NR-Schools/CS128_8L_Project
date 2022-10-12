@@ -304,21 +304,21 @@ public class Game extends javax.swing.JFrame {
 
     private void s20TimerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s20TimerMenuItemActionPerformed
         // TODO add your handling code here:
-        
+        gameTimer.stop();
         // Relaunch App with new settings
         callback.RestartGame(20_000);
     }//GEN-LAST:event_s20TimerMenuItemActionPerformed
 
     private void s40TimerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s40TimerMenuItemActionPerformed
         // TODO add your handling code here:
-        
+        gameTimer.stop();
         // Relaunch App with new settings
         callback.RestartGame(40_000);
     }//GEN-LAST:event_s40TimerMenuItemActionPerformed
 
     private void s60TimerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s60TimerMenuItemActionPerformed
         // TODO add your handling code here:
-        
+        gameTimer.stop();
         // Relaunch App with new settings
         callback.RestartGame(60_000);
     }//GEN-LAST:event_s60TimerMenuItemActionPerformed
