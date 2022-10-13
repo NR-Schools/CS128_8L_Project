@@ -3,18 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package Callbacks;
 
 /**
  *
  * @author hp
  */
-public class Coords {
-    public int x;
-    public int y;
-    
-    public Coords(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
+public interface IGameCallback {
+    public void GameFinished(int Duration, int Points);
+    public void RestartGame(int newDuration);
 }

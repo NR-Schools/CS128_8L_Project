@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package GameClasses;
+
+import javax.swing.JButton;
 
 /**
  *
  * @author hp
  */
-public interface IResultCallback {
-    public void ResultFinished();
+public class Wall extends GameObject {
+    
+    public Wall(JButton _swingObject, Vector2 _moveCoords) {
+        super(_swingObject, _moveCoords);
+    }
+    
 }

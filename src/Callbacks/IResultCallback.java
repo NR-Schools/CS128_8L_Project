@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package Callbacks;
 
 /**
  *
  * @author hp
  */
-public interface IGameCallback {
-    public void GameFinished(int Duration, int Points);
-    public void RestartGame(int newDuration);
+public interface IResultCallback {
+    public void ResultFinished();
 }

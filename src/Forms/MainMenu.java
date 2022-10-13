@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package Forms;
+
+import Callbacks.IGameCallback;
+import Callbacks.IResultCallback;
 
 /**
  *
@@ -16,7 +19,7 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
      */
     
     Game game;
-    Results results;
+    Result result;
     
     public MainMenu() {
         initComponents();
@@ -32,17 +35,24 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        QuitBtn = new javax.swing.JButton();
         PlayBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(474, 403));
-        setPreferredSize(new java.awt.Dimension(474, 403));
-        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("A Game");
 
-        PlayBtn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        QuitBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        QuitBtn.setText("Quit");
+        QuitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QuitBtnActionPerformed(evt);
+            }
+        });
+
+        PlayBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         PlayBtn.setText("Play");
         PlayBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,20 +65,27 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PlayBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(184, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(125, 125, 125)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(PlayBtn)
+                        .addGap(71, 71, 71)
+                        .addComponent(QuitBtn)))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-                .addComponent(PlayBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(112, 112, 112))
+                .addGap(41, 41, 41)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(QuitBtn)
+                    .addComponent(PlayBtn))
+                .addGap(81, 81, 81))
         );
 
         pack();
@@ -83,6 +100,35 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
         this.setVisible(false);
     }//GEN-LAST:event_PlayBtnActionPerformed
 
+    private void QuitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuitBtnActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_QuitBtnActionPerformed
+
+    @Override
+    public void GameFinished(int Duration, int Points) {
+        game.dispose();
+        
+        result = new Result(Duration, Points);
+        result.SetCallback(this);
+        result.setVisible(true);
+    }
+
+    @Override
+    public void RestartGame(int newDuration) {
+        game.dispose();
+        
+        game = new Game(newDuration);
+        game.SetCallback(this);
+        game.setVisible(true);
+    }
+
+    @Override
+    public void ResultFinished() {
+        result.dispose();
+        this.setVisible(true);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -120,31 +166,8 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton PlayBtn;
+    private javax.swing.JButton QuitBtn;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void GameFinished(int Duration, int Points) {
-        game.dispose();
-        
-        results = new Results();
-        results.SetCallback(this);
-        results.setVisible(true);
-        results.SetData(Points, Duration);
-    }
-
-    @Override
-    public void ResultFinished() {
-        results.dispose();
-        this.setVisible(true);
-    }
-
-    @Override
-    public void RestartGame(int newDuration) {
-        game.dispose();
-        
-        game = new Game(newDuration);
-        game.SetCallback(this);
-        game.setVisible(true);
-    }
 }
