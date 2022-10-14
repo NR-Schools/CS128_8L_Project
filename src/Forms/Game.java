@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -49,6 +50,11 @@ public class Game extends javax.swing.JFrame {
     
     public Game(int _duration) {
         initComponents();
+        
+        // Set Layout to Null to resolve revalidates invoking layout manager and resetting positions
+        this.setLayout(null);
+        
+        UI_Pane.setPosition(this, 10);
         
         // Set Game Params
         this.Duration = _duration;
@@ -86,6 +92,10 @@ public class Game extends javax.swing.JFrame {
         EnemyObj4 = new javax.swing.JButton();
         PlayerObj = new javax.swing.JButton();
         GoalObj = new javax.swing.JButton();
+        UI_Pane = new javax.swing.JLayeredPane();
+        UI_Time = new javax.swing.JLabel();
+        UI_Health = new javax.swing.JLabel();
+        UI_Points = new javax.swing.JLabel();
         GameMenuBar = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
         EndGameMenuItem = new javax.swing.JMenuItem();
@@ -133,6 +143,42 @@ public class Game extends javax.swing.JFrame {
         });
 
         GoalObj.setBackground(new java.awt.Color(0, 255, 0));
+
+        UI_Time.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        UI_Time.setText("Remaining Time: 20s");
+
+        UI_Health.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        UI_Health.setText("Health: 10");
+
+        UI_Points.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        UI_Points.setText("Points: 0");
+
+        UI_Pane.setLayer(UI_Time, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        UI_Pane.setLayer(UI_Health, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        UI_Pane.setLayer(UI_Points, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout UI_PaneLayout = new javax.swing.GroupLayout(UI_Pane);
+        UI_Pane.setLayout(UI_PaneLayout);
+        UI_PaneLayout.setHorizontalGroup(
+            UI_PaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UI_PaneLayout.createSequentialGroup()
+                .addGroup(UI_PaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(UI_Health)
+                    .addComponent(UI_Points)
+                    .addComponent(UI_Time))
+                .addGap(0, 14, Short.MAX_VALUE))
+        );
+        UI_PaneLayout.setVerticalGroup(
+            UI_PaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UI_PaneLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(UI_Time)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(UI_Health)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(UI_Points)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
 
         FileMenu.setText("File");
 
@@ -202,39 +248,27 @@ public class Game extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
+                        .addGap(117, 117, 117)
                         .addComponent(EnemyObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
+                        .addGap(44, 44, 44)
                         .addComponent(WallObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(WallObj7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
+                        .addGap(164, 164, 164)
                         .addComponent(WallObj5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
                         .addComponent(EnemyObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(133, 133, 133)))
+                        .addGap(133, 133, 133))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(WallObj7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(WallObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(GoalObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(78, 78, 78)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(EnemyObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(WallObj8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,59 +277,72 @@ public class Game extends javax.swing.JFrame {
                                         .addGap(21, 21, 21))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(WallObj6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(101, 101, 101))))))
+                                        .addGap(101, 101, 101))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(EnemyObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(125, 125, 125)
+                                .addComponent(WallObj8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addComponent(GoalObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(78, 78, 78)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(UI_Pane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(PlayerObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(137, 137, 137)
                         .addComponent(WallObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)))
-                .addGap(42, 42, 42))
+                        .addGap(91, 91, 91)))
+                .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(168, 168, 168)
+                .addComponent(WallObj8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(WallObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(WallObj6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(WallObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EnemyObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addComponent(WallObj8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(EnemyObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(WallObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(WallObj6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(WallObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EnemyObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
-                        .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addComponent(WallObj5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
-                                .addComponent(EnemyObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PlayerObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(EnemyObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(112, 112, 112))
-                            .addComponent(WallObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(GoalObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(118, 118, 118)
+                        .addComponent(EnemyObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(WallObj7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(263, 356, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(UI_Pane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(WallObj5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(EnemyObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PlayerObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(EnemyObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(112, 112, 112))
+                    .addComponent(WallObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(GoalObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(WallObj7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -353,7 +400,7 @@ public class Game extends javax.swing.JFrame {
     private void PlayerObjKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PlayerObjKeyPressed
         // TODO add your handling code here:
 
-        if (!player.isAllowMovement()) return;
+        //if (!player.isAllowMovement()) return;
         
         int keyCode = evt.getKeyCode();
         int movSpd = player.getMoveSpeed();
@@ -425,64 +472,73 @@ public class Game extends javax.swing.JFrame {
         }
         
         
-        // ** Initialize-Timers ** //
+        // ** Initialize+Run-Timers ** //
         InitializeTimers();
-        
-        
-        // ** Run-Timers ** //
-        gameTimer.start();
-        secGameTimer.start();
-        gameObjUpdateCoords.start();
-        gameObjUpdateLocation.start();
     }
     
     private void InitializeTimers() {
-        gameTimer = new Timer(Duration, evt -> {
-            StopAllTimers();
-            
-            GameEnd();
-        });
         
-        secGameTimer = new Timer(1000, evt -> {
-            timeSec += 1;
-            System.out.println(timeSec);
-        });
+        gameTimer = new Timer();
+        gameTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                GameEnd();
+            }
+        }, Duration);
         
-        gameObjUpdateCoords = new Timer(2000, evt -> {
-            for (Wall wall : walls) {
-                wall.getMoveCoords().x *= -1;
-                wall.getMoveCoords().y *= -1;
+        secGameTimer = new Timer();
+        secGameTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timeSec += 1;
+                UpdateUI();
             }
-        });
+        }, 0, 1000);
         
-        gameObjUpdateLocation = new Timer(100, evt -> {
-            for (Wall wall : walls) {
-                wall.getSwingObject().setLocation(
-                    wall.getSwingObject().getLocation().x + wall.getMoveCoords().x,
-                    wall.getSwingObject().getLocation().y + wall.getMoveCoords().y
-                );
-                
-                ScreenEdgeCollision(wall);
-                WallCollisions(wall);
+        gameObjUpdateCoords = new Timer();
+        gameObjUpdateCoords.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (Wall wall : walls) {
+                    wall.getMoveCoords().x *= -1;
+                    wall.getMoveCoords().y *= -1;
+                }
             }
-            
-            for (Enemy enemy : enemies) {
-                enemy.getSwingObject().setLocation(
-                    enemy.getSwingObject().getLocation().x + enemy.getMoveCoords().x,
-                    enemy.getSwingObject().getLocation().y + enemy.getMoveCoords().y
-                );
-                
-                ScreenEdgeCollision(enemy);
-                EnemyCollisions(enemy);
+        }, 0, 2000);
+        
+        gameObjUpdateLocation = new Timer();
+        gameObjUpdateLocation.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (Wall wall : walls) {
+                    wall.getSwingObject().setLocation(
+                        wall.getSwingObject().getLocation().x + wall.getMoveCoords().x,
+                        wall.getSwingObject().getLocation().y + wall.getMoveCoords().y
+                    );
+
+                    ScreenEdgeCollision(wall);
+                    WallCollisions(wall);
+                }
+
+                for (Enemy enemy : enemies) {
+                    enemy.getSwingObject().setLocation(
+                        enemy.getSwingObject().getLocation().x + enemy.getMoveCoords().x,
+                        enemy.getSwingObject().getLocation().y + enemy.getMoveCoords().y
+                    );
+
+                    ScreenEdgeCollision(enemy);
+                    EnemyCollisions(enemy);
+                }
             }
-        });
+        }, 0, 100);
     }
     
     private void StopAllTimers() {
-        gameTimer.stop();
-        secGameTimer.stop();
-        gameObjUpdateCoords.stop();
-        gameObjUpdateLocation.stop();
+        // Just To Be Sure :)
+        gameTimer.cancel();
+        secGameTimer.cancel();
+        gameObjUpdateCoords.cancel();
+        gameObjUpdateLocation.cancel();
     }
     
     private void GameEnd() {
@@ -527,6 +583,7 @@ public class Game extends javax.swing.JFrame {
         if (player.getSwingObject().getBounds().intersects(goal.getSwingObject().getBounds())) {
             // Add Points To Player
             Points += goal.getPoints();
+            UpdateUI();
             
             // Select Random Coord within Frame
             GoalObj.setLocation(
@@ -542,6 +599,7 @@ public class Game extends javax.swing.JFrame {
             player.TakeDamage(
                 enemy.getDamage()
             );
+            UpdateUI();
             
             // If Player Health <= 0, END GAME
             if (player.getHealth() <= 0) GameEnd();
@@ -557,7 +615,7 @@ public class Game extends javax.swing.JFrame {
     private void WallCollisions(Wall wall) {
         while (player.getSwingObject().getBounds().intersects(wall.getSwingObject().getBounds())) {
             // Undo Last Move
-            // Prevent Player From Moving If On Top Of Wall (Its A Feature Not A Bug)
+            // "Glitches" Player
             player.getSwingObject().setLocation(
                 player.getSwingObject().getLocation().x + wall.getMoveCoords().x,
                 player.getSwingObject().getLocation().y + wall.getMoveCoords().y
@@ -567,6 +625,24 @@ public class Game extends javax.swing.JFrame {
         }
         
         player.setAllowMovement(true);
+    }
+    
+    private void UpdateUI() {
+        UI_Time.setText(
+                "Remaining Time: " +
+                Integer.toString((Duration/1000)-timeSec) +
+                "s"
+        );
+        
+        UI_Health.setText(
+                "Health: " +
+                Integer.toString(player.getHealth())
+        );
+        
+        UI_Points.setText(
+                "Points: " +
+                Integer.toString(Points)
+        );
     }
     
     // =========================================================================
@@ -647,6 +723,10 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JButton GoalObj;
     private javax.swing.JMenu HelpMenu;
     private javax.swing.JButton PlayerObj;
+    private javax.swing.JLabel UI_Health;
+    private javax.swing.JLayeredPane UI_Pane;
+    private javax.swing.JLabel UI_Points;
+    private javax.swing.JLabel UI_Time;
     private javax.swing.JMenuItem VersionMenuItem;
     private javax.swing.JButton WallObj1;
     private javax.swing.JButton WallObj2;
