@@ -108,24 +108,33 @@ public class Game extends javax.swing.JFrame {
         VersionMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 500));
+        setPreferredSize(new java.awt.Dimension(580, 510));
+        setResizable(false);
         setSize(new java.awt.Dimension(500, 500));
 
         WallObj1.setBackground(new java.awt.Color(153, 153, 153));
+        WallObj1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Forms/wall.png"))); // NOI18N
 
         WallObj2.setBackground(new java.awt.Color(153, 153, 153));
+        WallObj2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Forms/wall.png"))); // NOI18N
 
         WallObj3.setBackground(new java.awt.Color(153, 153, 153));
+        WallObj3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Forms/wall.png"))); // NOI18N
 
         WallObj4.setBackground(new java.awt.Color(153, 153, 153));
+        WallObj4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Forms/wall.png"))); // NOI18N
 
         WallObj5.setBackground(new java.awt.Color(153, 153, 153));
+        WallObj5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Forms/wall.png"))); // NOI18N
 
         WallObj6.setBackground(new java.awt.Color(153, 153, 153));
+        WallObj6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Forms/wall.png"))); // NOI18N
 
         WallObj7.setBackground(new java.awt.Color(153, 153, 153));
+        WallObj7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Forms/wall.png"))); // NOI18N
 
         WallObj8.setBackground(new java.awt.Color(153, 153, 153));
+        WallObj8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Forms/wall.png"))); // NOI18N
 
         EnemyObj1.setBackground(new java.awt.Color(255, 0, 51));
 
@@ -254,20 +263,20 @@ public class Game extends javax.swing.JFrame {
                         .addComponent(EnemyObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(WallObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(WallObj2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(164, 164, 164)
-                        .addComponent(WallObj5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(WallObj5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(EnemyObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(133, 133, 133))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(84, 84, 84)
-                        .addComponent(WallObj7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(WallObj7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(WallObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(WallObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -276,13 +285,13 @@ public class Game extends javax.swing.JFrame {
                                         .addComponent(EnemyObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(21, 21, 21))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(WallObj6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(WallObj6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(101, 101, 101))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(EnemyObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(125, 125, 125)
-                                .addComponent(WallObj8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(WallObj8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(7, 7, 7)
                                 .addComponent(GoalObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,12 +301,12 @@ public class Game extends javax.swing.JFrame {
                                         .addComponent(UI_Pane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(PlayerObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(137, 137, 137)
-                        .addComponent(WallObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(WallObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(91, 91, 91)))
                 .addGap(13, 13, 13))
         );
