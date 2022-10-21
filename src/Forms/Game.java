@@ -11,6 +11,7 @@ import GameClasses.Enemy;
 import GameClasses.GameObject;
 import GameClasses.Goal;
 import GameClasses.Player;
+import GameClasses.TimeExtender;
 import GameClasses.Wall;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -36,6 +37,7 @@ public class Game extends javax.swing.JFrame {
     
     private Player player;
     private Goal dGoal, sGoal;
+    private TimeExtender timeExtend;
     private ArrayList<Wall> walls;
     private ArrayList<Enemy> enemies;
     
@@ -100,6 +102,7 @@ public class Game extends javax.swing.JFrame {
         UI_Health = new javax.swing.JLabel();
         UI_Points = new javax.swing.JLabel();
         sGoalObj = new javax.swing.JButton();
+        TimeExtendObj = new javax.swing.JButton();
         GameMenuBar = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
         EndGameMenuItem = new javax.swing.JMenuItem();
@@ -297,11 +300,6 @@ public class Game extends javax.swing.JFrame {
                                         .addComponent(WallObj6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(101, 101, 101))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(EnemyObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(125, 125, 125)
-                                .addComponent(WallObj8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(7, 7, 7)
                                 .addComponent(dGoalObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(78, 78, 78)
@@ -313,10 +311,19 @@ public class Game extends javax.swing.JFrame {
                                         .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(PlayerObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(137, 137, 137)
-                        .addComponent(WallObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(91, 91, 91)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(PlayerObj, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(137, 137, 137)
+                                .addComponent(WallObj1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(91, 91, 91))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TimeExtendObj, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(EnemyObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(125, 125, 125)
+                                    .addComponent(WallObj8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
@@ -330,10 +337,13 @@ public class Game extends javax.swing.JFrame {
                 .addComponent(WallObj6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(WallObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EnemyObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(WallObj3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EnemyObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(39, 39, 39)
+                        .addComponent(WallObj4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TimeExtendObj, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(52, 52, 52))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,6 +475,50 @@ public class Game extends javax.swing.JFrame {
     private void InitializeGameComponents() {
         // ** Players ** //
         player = new Player(10, PlayerObj, 5);
+        
+        timeExtend = new TimeExtender(3, 5, TimeExtendObj, new Vector2(0, 0));
+        timeExtend.getSwingObject().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (timeExtend.isAllowExtend()) {
+                    // Add Time
+                    CurrDuration += timeExtend.getTimeIncrease();
+                    
+                    // Start CD
+                    timeExtend.resetCoolDown();
+                    
+                    // Hide Object
+                    timeExtend.getSwingObject().setVisible(false);
+                    
+                    // Change Position
+                    timeExtend.getSwingObject().setLocation(
+                            new Random().nextInt(EDGE.x),
+                            new Random().nextInt(EDGE.y)
+                    );
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //
+            }
+        });
+        
         dGoal = new Goal(dGoalObj, new Vector2(0, 0), 5);
         sGoal = new Goal(sGoalObj, new Vector2(0, 0), 8);
         
@@ -516,6 +570,14 @@ public class Game extends javax.swing.JFrame {
                         wall.getMoveCoords().x *= -1;
                         wall.getMoveCoords().y *= -1;
                     }
+                }
+                
+                // Update Time Extender
+                if (!timeExtend.isAllowExtend()) {
+                    timeExtend.updateCoolDown(1);
+                }
+                else {
+                    timeExtend.getSwingObject().setVisible(true);
                 }
                 
                 // Choose New Move Direction for sGoal every 1 seconds
@@ -773,6 +835,7 @@ public class Game extends javax.swing.JFrame {
     private javax.swing.JMenuBar GameMenuBar;
     private javax.swing.JMenu HelpMenu;
     private javax.swing.JButton PlayerObj;
+    private javax.swing.JButton TimeExtendObj;
     private javax.swing.JLabel UI_Health;
     private javax.swing.JLayeredPane UI_Pane;
     private javax.swing.JLabel UI_Points;
