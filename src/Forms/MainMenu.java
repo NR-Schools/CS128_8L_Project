@@ -95,7 +95,7 @@ public class MainMenu extends javax.swing.JFrame implements IGameCallback, IResu
 
     private void PlayBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayBtnActionPerformed
         // TODO add your handling code here:
-        game = new Game(20_000);
+        game = new Game(20);
         game.SetCallback(this);
         game.setVisible(true);
         this.setVisible(false);

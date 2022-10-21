@@ -39,25 +39,28 @@ public class Game extends javax.swing.JFrame {
     private ArrayList<Wall> walls;
     private ArrayList<Enemy> enemies;
     
-    private int Duration;
+    private int DefDuration; // In Seconds
+    private int CurrDuration; // In Seconds
+    
     private int Points;
     
     private Vector2 EDGE;
     
-    private Timer gameTimer, secGameTimer, gameObjUpdateCoords, gameObjUpdateLocation;
+    private Timer secGameTimer, gameObjUpdateCoords, gameObjUpdateLocation;
     
     private int timeSec;
     
     public Game(int _duration) {
         initComponents();
         
-        // Set Layout to Null to resolve revalidates invoking layout manager and resetting positions
+        // Set Layout to Null to resolve revalidate() invoking layout manager and resetting positions
         this.setLayout(null);
         
         UI_Pane.setPosition(this, 10);
         
         // Set Game Params
-        this.Duration = _duration;
+        this.DefDuration = _duration;
+        this.CurrDuration = _duration;
         this.Points = 0;
         
         EDGE = new Vector2(
@@ -369,7 +372,7 @@ public class Game extends javax.swing.JFrame {
 
         // Relaunch App with new settings
         StopAllTimers();
-        callback.RestartGame(20_000);
+        callback.RestartGame(20);
     }//GEN-LAST:event_s20TimerMenuItemActionPerformed
 
     private void s40TimerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s40TimerMenuItemActionPerformed
@@ -377,7 +380,7 @@ public class Game extends javax.swing.JFrame {
 
         // Relaunch App with new settings
         StopAllTimers();
-        callback.RestartGame(40_000);
+        callback.RestartGame(40);
     }//GEN-LAST:event_s40TimerMenuItemActionPerformed
 
     private void s60TimerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s60TimerMenuItemActionPerformed
@@ -385,7 +388,7 @@ public class Game extends javax.swing.JFrame {
 
         // Relaunch App with new settings
         StopAllTimers();
-        callback.RestartGame(60_000);
+        callback.RestartGame(60);
     }//GEN-LAST:event_s60TimerMenuItemActionPerformed
 
     private void GameHelpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GameHelpMenuItemActionPerformed
@@ -486,21 +489,16 @@ public class Game extends javax.swing.JFrame {
     }
     
     private void InitializeTimers() {
-        
-        gameTimer = new Timer();
-        gameTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                GameEnd();
-            }
-        }, Duration);
-        
         secGameTimer = new Timer();
         secGameTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 timeSec += 1;
                 UpdateUI();
+                
+                // Check if Game is "Done"
+                System.out.println(timeSec);
+                if (timeSec == CurrDuration) GameEnd();
             }
         }, 0, 1000);
         
@@ -544,7 +542,6 @@ public class Game extends javax.swing.JFrame {
     
     private void StopAllTimers() {
         // Just To Be Sure :)
-        gameTimer.cancel();
         secGameTimer.cancel();
         gameObjUpdateCoords.cancel();
         gameObjUpdateLocation.cancel();
@@ -553,7 +550,7 @@ public class Game extends javax.swing.JFrame {
     private void GameEnd() {
         StopAllTimers();
         
-        callback.GameFinished(Duration/1000, Points);
+        callback.GameFinished(this.DefDuration, Points);
     }
     
     // =========================================================================
@@ -639,7 +636,7 @@ public class Game extends javax.swing.JFrame {
     private void UpdateUI() {
         UI_Time.setText(
                 "Remaining Time: " +
-                Integer.toString((Duration/1000)-timeSec) +
+                Integer.toString(CurrDuration-timeSec) +
                 "s"
         );
         
