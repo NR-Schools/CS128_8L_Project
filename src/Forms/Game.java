@@ -480,6 +480,21 @@ public class Game extends javax.swing.JFrame {
         timeExtend.getSwingObject().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                //
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
                 if (timeExtend.isAllowExtend()) {
                     // Add Time
                     CurrDuration += timeExtend.getTimeIncrease();
@@ -496,21 +511,6 @@ public class Game extends javax.swing.JFrame {
                             new Random().nextInt(EDGE.y)
                     );
                 }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //
             }
 
             @Override
